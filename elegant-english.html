@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>세련 영어 익히기 ✦ Elegant English</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=Playfair+Display:ital@1&display=swap');
+  @font-face{
+    font-family:'GmarketSansMedium';
+    src:url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight:normal; font-display:swap;
+  }
+  :root{
+    --navy:#1B3A5C; --gold:#D4A94A; --ivory:#FAF7F2; --ink:#243240;
+    --line:#ECE5D8; --line2:#E2DACB; --muted:#8A8273; --faint:#B4AC9C;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0;}
+  body{
+    min-height:100dvh; background:var(--ivory); color:var(--ink);
+    font-family:'Noto Sans KR',system-ui,sans-serif; word-break:keep-all;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:480px; margin:0 auto;
+    padding:max(env(safe-area-inset-top),18px) 18px calc(env(safe-area-inset-bottom) + 28px);}
+  .ttl-en{font-family:'Playfair Display',serif; font-style:italic; color:var(--gold); font-size:13px;}
+  .ttl-ko{font-family:'GmarketSansMedium','Noto Sans KR',sans-serif; font-weight:800; font-size:19px; color:var(--navy); margin-top:-2px;}
+
+  header{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
+  .stats{display:flex; gap:8px;}
+  .stat{background:#fff; border:1px solid var(--line); border-radius:12px; padding:7px 12px; text-align:center; min-width:54px;}
+  .stat b{display:block; font-size:15px; font-weight:800; color:var(--navy);}
+  .stat span{font-size:10px; color:#9A9384;}
+
+  .levelbar{background:#fff; border:1px solid var(--line); border-radius:14px; padding:11px 14px; margin-bottom:16px;}
+  .levelbar .row{display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:7px;}
+  .levelbar .row b{color:var(--navy);}
+  .track{height:7px; background:#EFE9DC; border-radius:99px; overflow:hidden;}
+  .fill{height:100%; background:linear-gradient(90deg,var(--gold),#E8C97A); border-radius:99px; transition:width .6s;}
+
+  .tabs{display:flex; gap:8px; margin-bottom:16px;}
+  .tab{flex:1; min-height:46px; border:none; border-radius:12px; cursor:pointer; font-size:13.5px; font-weight:700;
+    font-family:inherit; background:#fff; color:var(--muted); box-shadow:inset 0 0 0 1px var(--line);}
+  .tab.on{background:var(--navy); color:#fff; box-shadow:none;}
+
+  .hint{text-align:center; font-size:12px; color:#A39B8A; margin-bottom:10px;}
+  .badge{display:inline-block; background:#F3EEE3; color:var(--navy); font-size:11px; font-weight:700; padding:4px 11px; border-radius:99px;}
+
+  /* flashcard */
+  .scene{perspective:1000px; cursor:pointer;}
+  .flip{transition:transform .5s; transform-style:preserve-3d; position:relative;}
+  .flip.on{transform:rotateY(180deg);}
+  .face{backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:20px; padding:24px; min-height:210px;
+    display:flex; flex-direction:column; justify-content:center;}
+  .front{background:#fff; border:1px solid var(--line);}
+  .back{position:absolute; inset:0; transform:rotateY(180deg); background:var(--navy); color:#fff;}
+  .lab{font-size:10px; letter-spacing:1.5px; font-weight:800;}
+  .lab.basic{color:var(--faint); margin-top:16px;}
+  .lab.pol{color:var(--gold);}
+  .sent{font-size:20px; line-height:1.5; margin-top:6px; font-weight:500;}
+  .back .sent{font-size:19px; font-weight:600;}
+  .ko{font-size:13.5px; color:#BFD0E2; margin-top:8px;}
+  .ex{font-size:12.5px; color:#A9BBD0; margin-top:4px; font-style:italic;}
+  .divln{border-top:1px solid rgba(255,255,255,.15); margin:14px 0 10px;}
+  .why{font-size:12.5px; line-height:1.5; color:#E7D9B6;}
+  .tip{font-size:12px; color:#C2BAA9; margin-top:18px;}
+
+  .actions{display:flex; gap:10px; margin-top:14px;}
+  .btn{flex:1; min-height:54px; border-radius:14px; border:none; cursor:pointer; font-size:15px; font-weight:800; font-family:inherit;}
+  .btn.solid{background:var(--gold); color:#3A2E12;}
+  .btn.ghost{background:#fff; color:var(--navy); border:1.5px solid var(--line2);}
+
+  /* quiz */
+  .card{background:#fff; border:1px solid var(--line); border-radius:18px; padding:18px;}
+  .qsit{font-size:13px; color:var(--muted); margin:12px 0 4px;}
+  .qq{font-size:15px; font-weight:700; color:var(--navy); margin-bottom:14px;}
+  .opts{display:flex; flex-direction:column; gap:9px;}
+  .opt{text-align:left; padding:13px 14px; border-radius:12px; font-size:14.5px; line-height:1.45; min-height:50px;
+    border:1.5px solid var(--line2); background:#fff; color:var(--ink); font-weight:500; cursor:pointer; font-family:inherit;}
+  .opt.correct{border-color:#7BA05B; background:#EEF3EC;}
+  .opt.wrong{border-color:#C9745B; background:#FBEEEA;}
+  .opt:disabled{cursor:default;}
+  .explain{margin-top:14px; padding:13px; border-radius:12px; background:#FBF6EA; border:1px solid #EEDFBE; font-size:13px; line-height:1.55;}
+  .explain b.ok{color:#4D6B43;} .explain b.no{color:#B25A3E;}
+
+  .saved-item{background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:10px; font-size:15px; line-height:1.5;}
+  .empty{text-align:center; color:#A39B8A; padding:50px 20px; font-size:14px; line-height:1.7;}
+  .foot{text-align:center; margin-top:22px; font-size:11px; color:#C2BAA9;}
+  .hidden{display:none;}
+
+  @keyframes rise{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+  .rise{animation:rise .35s ease both;}
+
+  @media (max-width:520px){ .ttl-ko{font-size:18px;} .sent{font-size:18px;} }
+  @media (max-width:360px){ .wrap{padding-left:14px; padding-right:14px;} .stat{min-width:48px; padding:6px 9px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="ttl-en">elegant english</div>
+      <div class="ttl-ko">세련 영어 익히기</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="streak">🔥0</b><span>연속</span></div>
+      <div class="stat"><b id="points">0</b><span>포인트</span></div>
+    </div>
+  </header>
+
+  <div class="levelbar">
+    <div class="row"><span>Lv.<b id="level">1</b> · <b id="masterCount">외운 표현 0개</b></span><span id="intoTxt">0/300</span></div>
+    <div class="track"><div class="fill" id="fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on" id="tab-learn" onclick="setView('learn')">배우기</button>
+    <button class="tab" id="tab-quiz" onclick="setView('quiz')">퀴즈</button>
+    <button class="tab" id="tab-saved" onclick="setView('saved')">외운 표현</button>
+  </div>
+
+  <!-- 배우기 -->
+  <div id="view-learn">
+    <div class="hint" id="learnHint">카드를 탭하면 세련된 표현이 보여요 · 1/100</div>
+    <div class="scene" onclick="flip()">
+      <div class="flip" id="flip">
+        <div class="face front">
+          <span class="badge" id="cBadgeF"></span>
+          <div class="lab basic">평범한 표현</div>
+          <div class="sent" id="cBasic"></div>
+          <div class="tip">탭해서 세련된 버전 보기 →</div>
+        </div>
+        <div class="face back">
+          <div class="lab pol">세련된 표현 ✦</div>
+          <div class="sent" id="cPol"></div>
+          <div class="ko" id="cKo"></div>
+          <div class="ex" id="cEx"></div>
+          <div class="divln"></div>
+          <div class="why" id="cWhy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn ghost" onclick="nextCard(false)">다시 볼래요</button>
+      <button class="btn solid" onclick="nextCard(true)">외웠어요 ✦ +10</button>
+    </div>
+  </div>
+
+  <!-- 퀴즈 -->
+  <div id="view-quiz" class="hidden">
+    <div class="card rise" id="quizCard">
+      <span class="badge" id="qBadge"></span>
+      <div class="qsit" id="qSit"></div>
+      <div class="qq">가장 세련된 표현은?</div>
+      <div class="opts" id="qOpts"></div>
+      <div class="explain hidden" id="qExplain"></div>
+    </div>
+    <button class="btn solid" style="width:100%; margin-top:12px;" onclick="loadQuiz()">다음 문제 →</button>
+  </div>
+
+  <!-- 외운 표현 -->
+  <div id="view-saved" class="hidden">
+    <div id="savedList"></div>
+  </div>
+
+  <div class="foot">매일 조금씩 · 보고 익히는 세련 영어 ✦</div>
+</div>
+
+<script>
+/* ── 데이터 ───────────────────────────────────── */
+const SC = {
+  DM:{ko:"DM 답장",emoji:"💬"}, 캡션:{ko:"인스타 캡션",emoji:"📸"},
+  고객센터:{ko:"고객센터",emoji:"🛳️"}, 네트워킹:{ko:"네트워킹",emoji:"🤝"}, 연결어:{ko:"연결·전환",emoji:"🔗"}
+};
+
+const BANK = [{"sc": "DM", "basic": "Do you want to join?", "polished": "If it feels right for you, I'd love to walk you through it.", "ko": "당신에게 맞다면, 제가 차근차근 안내해 드리고 싶어요.", "ex": "No pressure at all — if it feels right for you, I'd love to walk you through it.", "why": "권유를 'I'd love to + 부드러운 조건(if it feels right)'으로 → 부담 없이 따뜻하게."}, {"sc": "DM", "basic": "Send me a message.", "polished": "Feel free to reach out anytime.", "ko": "언제든 편하게 연락 주세요.", "ex": "Feel free to reach out anytime — I'm always happy to chat.", "why": "명령형(Send me)을 'Feel free to~'로 → 압박감을 없애고 여유로운 톤."}, {"sc": "DM", "basic": "Check this link.", "polished": "Whenever you have a moment, take a look at the link.", "ko": "여유 되실 때 링크 한번 봐주세요.", "ex": "Whenever you have a moment, take a look at the link in my bio.", "why": "명령을 'Whenever you have a moment'로 → 상대의 시간을 존중하는 인상."}, {"sc": "DM", "basic": "I will tell you everything.", "polished": "I'd be happy to share the details with you.", "ko": "자세한 내용은 기꺼이 알려드릴게요.", "ex": "I'd be happy to share the details with you whenever you're ready.", "why": "'I will tell' → 'I'd be happy to share': 호의로 바꿔 더 친절하게."}, {"sc": "DM", "basic": "Thank you for your message.", "polished": "Thank you so much for taking the time to reach out.", "ko": "시간 내어 연락 주셔서 정말 감사해요.", "ex": "Thank you so much for taking the time to reach out — it means a lot.", "why": "상대의 노력(taking the time)을 짚어 진심을 전달."}, {"sc": "DM", "basic": "Do you have questions?", "polished": "If anything comes to mind, I'm here.", "ko": "궁금한 게 떠오르면 언제든 말씀하세요.", "ex": "If anything comes to mind, I'm here — no question is too small.", "why": "질문을 재촉하지 않고 'I'm here'로 곁에 있어주는 느낌."}, {"sc": "DM", "basic": "Reply to me soon.", "polished": "No rush — reply whenever it's convenient.", "ko": "급하지 않으니 편하실 때 답주세요.", "ex": "No rush — reply whenever it's convenient for you.", "why": "재촉을 'No rush'로 뒤집어 여유와 배려를 표현."}, {"sc": "DM", "basic": "I want to help you.", "polished": "I'd love to support you however I can.", "ko": "제가 할 수 있는 한 도와드리고 싶어요.", "ex": "I'd love to support you however I can along the way.", "why": "'help' 대신 'support you however I can' → 더 따뜻하고 든든한 인상."}, {"sc": "DM", "basic": "You should follow me.", "polished": "I'd be glad to have you along for the journey.", "ko": "함께 여정을 나누면 정말 기쁠 것 같아요.", "ex": "If it sounds fun, I'd be glad to have you along for the journey.", "why": "팔로우 강요 대신 '여정에 함께'라는 초대형 표현."}, {"sc": "DM", "basic": "Sorry for the late reply.", "polished": "Thank you for your patience — getting back to you now.", "ko": "기다려 주셔서 감사해요, 이제 답드릴게요.", "ex": "Thank you for your patience — getting back to you now.", "why": "사과(Sorry)를 감사(Thank you for your patience)로 → 더 품위 있게."}, {"sc": "DM", "basic": "I'm busy now, message later.", "polished": "Things are a little hectic today — may I get back to you shortly?", "ko": "오늘 좀 정신없어서요, 곧 다시 연락드려도 될까요?", "ex": "Things are a little hectic today — may I get back to you shortly?", "why": "'바쁘다' 직설 대신 완곡하게, 양해를 구하는 질문형."}, {"sc": "DM", "basic": "Let me know if you want it.", "polished": "Just say the word whenever you're ready.", "ko": "준비되시면 한마디만 주세요.", "ex": "Just say the word whenever you're ready — I'll take care of the rest.", "why": "'알려줘'를 'Just say the word'로 → 가볍고 센스 있게."}, {"sc": "DM", "basic": "It's free, try it.", "polished": "There's nothing to lose by giving it a try.", "ko": "밑져야 본전이니 한번 해보셔도 좋아요.", "ex": "Honestly, there's nothing to lose by giving it a try.", "why": "'무료'를 강조하기보다 'nothing to lose'로 부담을 덜어줌."}, {"sc": "DM", "basic": "Don't worry about it.", "polished": "Please don't give it a second thought.", "ko": "전혀 신경 쓰지 않으셔도 돼요.", "ex": "Please don't give it a second thought — it's completely fine.", "why": "'don't worry'를 'don't give it a second thought'로 → 더 세련된 위로."}, {"sc": "DM", "basic": "I'm so glad you messaged.", "polished": "It truly made my day to hear from you.", "ko": "연락 주셔서 오늘 정말 기뻤어요.", "ex": "It truly made my day to hear from you.", "why": "'기쁘다'를 'made my day'로 → 따뜻하고 자연스러운 영어 감성."}, {"sc": "DM", "basic": "Tell me what you think.", "polished": "I'd love to hear your honest thoughts.", "ko": "솔직한 생각을 들어보고 싶어요.", "ex": "Whenever you're ready, I'd love to hear your honest thoughts.", "why": "명령형 'Tell me'를 'I'd love to hear~'로 → 의견을 정중히 청함."}, {"sc": "DM", "basic": "Add me on KakaoTalk.", "polished": "Feel free to find me on KakaoTalk whenever you like.", "ko": "편하실 때 카톡으로 찾아주세요.", "ex": "Feel free to find me on KakaoTalk whenever you like.", "why": "명령을 'Feel free to~ whenever you like'로 → 부담 없는 초대."}, {"sc": "DM", "basic": "I can explain on a call.", "polished": "If it's easier, we could hop on a quick call.", "ko": "편하시면 잠깐 통화해도 좋아요.", "ex": "If it's easier, we could hop on a quick call sometime.", "why": "'설명해줄게' 대신 'we could~'로 제안형, 'hop on'으로 가볍게."}, {"sc": "DM", "basic": "Hope you are well.", "polished": "I hope this finds you well.", "ko": "잘 지내고 계시길 바라요.", "ex": "I hope this finds you well — it's been a little while!", "why": "흔한 인사를 격식 있는 정형 표현으로 → 정중한 첫 문장."}, {"sc": "DM", "basic": "Congrats on your decision.", "polished": "I'm so happy for you — this is a wonderful step.", "ko": "정말 잘 결정하셨어요, 멋진 한 걸음이에요.", "ex": "I'm so happy for you — this is a wonderful step.", "why": "축하를 'wonderful step'으로 구체화해 진심을 더함."}, {"sc": "DM", "basic": "Ask me anything.", "polished": "Please don't hesitate to ask me anything.", "ko": "무엇이든 편하게 물어보세요.", "ex": "Please don't hesitate to ask me anything at all.", "why": "'Ask me'를 'don't hesitate to~'로 → 정중하고 열린 태도."}, {"sc": "DM", "basic": "I'll send it now.", "polished": "I'll get that over to you right away.", "ko": "지금 바로 보내드릴게요.", "ex": "I'll get that over to you right away.", "why": "'send'을 'get that over to you'로 → 더 자연스러운 원어민 표현."}, {"sc": "DM", "basic": "We should talk more.", "polished": "I'd love to continue this conversation sometime.", "ko": "언젠가 이 이야기 더 나누고 싶어요.", "ex": "I'd love to continue this conversation sometime soon.", "why": "'더 얘기하자'를 'continue this conversation'으로 → 부드럽고 격식 있게."}, {"sc": "DM", "basic": "Welcome!", "polished": "It's so lovely to have you here.", "ko": "함께하게 되어 정말 반가워요.", "ex": "It's so lovely to have you here — welcome!", "why": "단순 환영을 'lovely to have you here'로 → 따뜻한 환대."}, {"sc": "캡션", "basic": "The sea is very beautiful.", "polished": "There's something quietly magical about the open sea.", "ko": "탁 트인 바다엔 어딘가 조용히 빛나는 무언가가 있어요.", "ex": "There's something quietly magical about the open sea at sunrise.", "why": "'very beautiful' 대신 'something quietly magical' → 감성과 여운."}, {"sc": "캡션", "basic": "I am so happy here.", "polished": "Moments like these are exactly why I chose this life.", "ko": "이런 순간들이, 제가 이 삶을 택한 이유예요.", "ex": "Salt in the air, no schedule — moments like these are exactly why I chose this life.", "why": "감정을 직접 말하기보다 '왜 행복한지'를 보여주기."}, {"sc": "캡션", "basic": "I quit my job and now I travel.", "polished": "Ten years since I traded my desk for the open sea.", "ko": "책상을 바다와 맞바꾼 지 10년.", "ex": "Ten years since I traded my desk for the open sea — and I've never looked back.", "why": "사실 나열 대신 대비 이미지(desk ↔ open sea)로 한 줄 스토리."}, {"sc": "캡션", "basic": "It was a really good day.", "polished": "Some days don't need a filter.", "ko": "어떤 날은 필터가 필요 없죠.", "ex": "Golden hour on deck. Some days don't need a filter.", "why": "평범한 'good day' 대신 짧고 리듬감 있는 한 줄로 여운."}, {"sc": "캡션", "basic": "I love this view.", "polished": "Views like this never get old.", "ko": "이런 풍경은 아무리 봐도 질리지 않아요.", "ex": "Day 40 at sea, and views like this never get old.", "why": "'좋다'를 'never get old'로 → 자연스럽고 세련된 감탄."}, {"sc": "캡션", "basic": "Travel changed my life.", "polished": "I left to see the world, and somewhere along the way it reshaped me.", "ko": "세상을 보러 떠났는데, 어느새 그게 나를 다시 빚었어요.", "ex": "I left to see the world, and somewhere along the way it reshaped me.", "why": "직접적 'changed my life'를 은유적 'reshaped me'로 → 깊이."}, {"sc": "캡션", "basic": "I'm grateful.", "polished": "Grateful doesn't quite cover it.", "ko": "감사하다는 말로는 부족해요.", "ex": "Grateful doesn't quite cover it. But it's a start.", "why": "'grateful'을 강조하려고 'doesn't quite cover it'로 → 진한 여운."}, {"sc": "캡션", "basic": "Another beautiful port.", "polished": "Another port, another story to carry home.", "ko": "또 하나의 항구, 또 하나의 이야기.", "ex": "Another port, another story to carry home.", "why": "반복 구조(Another ~, another ~)로 리듬감 있는 캡션."}, {"sc": "캡션", "basic": "I'm living my dream.", "polished": "This used to be a dream. Now it's just a Tuesday.", "ko": "한때 꿈이던 것이, 이젠 그냥 화요일이에요.", "ex": "This used to be a dream. Now it's just a Tuesday.", "why": "대비(꿈 ↔ 평범한 화요일)로 임팩트 있는 반전."}, {"sc": "캡션", "basic": "Hard work pays off.", "polished": "Turns out the leap was worth it.", "ko": "결국 그 도약은 옳았어요.", "ex": "Three years and one terrifying leap later — turns out the leap was worth it.", "why": "교훈적 표현을 'the leap was worth it'로 → 개인적이고 진솔하게."}, {"sc": "캡션", "basic": "I was scared but I did it.", "polished": "I was terrified. I did it anyway.", "ko": "무서웠어요. 그래도 했어요.", "ex": "I was terrified. I did it anyway. That's the whole secret.", "why": "짧은 두 문장과 'anyway'로 용기 서사를 강렬하게."}, {"sc": "캡션", "basic": "Life is short, so travel.", "polished": "If not now, when?", "ko": "지금이 아니면, 언제일까요?", "ex": "If not now, when? See you out there.", "why": "교훈을 짧은 질문 하나로 → 강한 울림."}, {"sc": "캡션", "basic": "The sunset is amazing.", "polished": "The sky put on a show tonight.", "ko": "오늘 하늘이 한바탕 공연을 펼쳤어요.", "ex": "No filter needed — the sky put on a show tonight.", "why": "'amazing' 대신 의인화('put on a show')로 생생하게."}, {"sc": "캡션", "basic": "I feel free.", "polished": "Out here, freedom isn't a word — it's a feeling.", "ko": "여기선 자유가 단어가 아니라 감각이에요.", "ex": "Out here, freedom isn't a word — it's a feeling.", "why": "추상적 'free'를 '단어 vs 감각' 대비로 → 시적이고 세련됨."}, {"sc": "캡션", "basic": "A new adventure begins.", "polished": "And just like that, a new chapter begins.", "ko": "그렇게, 새로운 챕터가 시작돼요.", "ex": "Bags packed, heart open. And just like that, a new chapter begins.", "why": "'adventure'를 'chapter'로, 'just like that'로 자연스러운 전환."}, {"sc": "캡션", "basic": "Believe in yourself.", "polished": "The version of you waiting on the other side is worth the fear.", "ko": "두려움 너머에서 기다리는 당신은, 그 두려움만큼 값져요.", "ex": "The version of you waiting on the other side is worth the fear.", "why": "흔한 자기계발 문구를 구체적 이미지로 → 깊이 있는 동기부여."}, {"sc": "캡션", "basic": "Best decision ever.", "polished": "No regrets. Not a single one.", "ko": "후회 없어요. 단 하나도.", "ex": "Quit the safe path. No regrets. Not a single one.", "why": "'best decision'을 'No regrets. Not a single one.'으로 → 단호한 리듬."}, {"sc": "캡션", "basic": "I'm tired but happy.", "polished": "Bone-tired, heart-full.", "ko": "몸은 녹초인데, 마음은 가득해요.", "ex": "Bone-tired, heart-full. The best kind of exhausted.", "why": "대구 표현(Bone-tired, heart-full)으로 감각적이고 세련되게."}, {"sc": "캡션", "basic": "I'll remember this forever.", "polished": "Some moments you don't photograph — you just feel.", "ko": "어떤 순간은 찍지 않고, 그냥 느껴요.", "ex": "Some moments you don't photograph — you just feel.", "why": "'기억할게'를 '찍지 않고 느낀다'는 역설로 → 감성 극대화."}, {"sc": "캡션", "basic": "Follow your heart.", "polished": "Quietly, stubbornly, following my own compass.", "ko": "조용히, 고집스럽게, 내 나침반을 따라가요.", "ex": "Quietly, stubbornly, following my own compass.", "why": "진부한 'follow your heart'를 부사+은유로 → 개성 있게."}, {"sc": "캡션", "basic": "Cruising is the best.", "polished": "Home is wherever the ship is docked.", "ko": "배가 닿는 곳이 곧 집이에요.", "ex": "Home is wherever the ship is docked tonight.", "why": "최상급 'the best' 대신 '집의 정의'로 → 라이프스타일을 표현."}, {"sc": "캡션", "basic": "Thank you for following me.", "polished": "Thank you for being part of this little journey.", "ko": "이 작은 여정에 함께해 주셔서 고마워요.", "ex": "Thank you for being part of this little journey of mine.", "why": "'팔로우 감사'를 'part of this journey'로 → 관계의 따뜻함."}, {"sc": "캡션", "basic": "A slow morning today.", "polished": "A slow morning, and nowhere I have to be.", "ko": "느린 아침, 그리고 가야 할 곳도 없어요.", "ex": "A slow morning, and nowhere I have to be. Bliss.", "why": "상황을 'nowhere I have to be'로 → 자유의 감각을 구체화."}, {"sc": "캡션", "basic": "Dream big.", "polished": "Dream a little reckless.", "ko": "조금은 무모하게 꿈꿔요.", "ex": "Play it safe? Not this life. Dream a little reckless.", "why": "상투적 'dream big'을 'a little reckless'로 비틀어 → 개성."}, {"sc": "고객센터", "basic": "I want to change my booking.", "polished": "I'd like to make a small adjustment to my reservation.", "ko": "예약을 조금 변경하고 싶습니다.", "ex": "Hi, I'd like to make a small adjustment to my reservation if possible.", "why": "'I want' → 'I'd like' + 'small adjustment'로 정중하고 구체적으로."}, {"sc": "고객센터", "basic": "Give me a refund.", "polished": "Would it be possible to arrange a refund?", "ko": "환불이 가능할까요?", "ex": "Would it be possible to arrange a refund for this booking?", "why": "명령을 'Would it be possible to~' 형태의 정중한 요청으로."}, {"sc": "고객센터", "basic": "Can I get a better room?", "polished": "I was wondering if an upgrade might be available.", "ko": "혹시 업그레이드가 가능한지 궁금해요.", "ex": "I was wondering if a cabin upgrade might be available for our sailing.", "why": "직접 묻기보다 'I was wondering if~'로 완곡하고 세련되게."}, {"sc": "고객센터", "basic": "Answer me quickly please.", "polished": "I'd appreciate any update when you get the chance.", "ko": "가능하실 때 소식 주시면 감사하겠습니다.", "ex": "No rush — I'd appreciate any update when you get the chance.", "why": "재촉 대신 'when you get the chance'로 정중하게 부탁."}, {"sc": "고객센터", "basic": "There is a problem with my booking.", "polished": "There seems to be a small issue with my booking.", "ko": "예약에 작은 문제가 있는 것 같아요.", "ex": "There seems to be a small issue with my booking — could we take a look?", "why": "단정적 'There is'를 'There seems to be a small'로 → 부드럽게."}, {"sc": "고객센터", "basic": "I didn't get my confirmation.", "polished": "I don't seem to have received my confirmation yet.", "ko": "아직 확인 메일을 못 받은 것 같아요.", "ex": "I don't seem to have received my confirmation yet — could you check?", "why": "'안 왔다' 단정 대신 'I don't seem to have~'로 완곡하게."}, {"sc": "고객센터", "basic": "This is wrong.", "polished": "I think there may have been a mix-up.", "ko": "뭔가 착오가 있었던 것 같아요.", "ex": "I think there may have been a small mix-up with my order.", "why": "'틀렸다' 직설을 'there may have been a mix-up'으로 → 비난 없이."}, {"sc": "고객센터", "basic": "I need help.", "polished": "I'd be grateful for your help with something.", "ko": "한 가지 도움을 받을 수 있을까요?", "ex": "I'd be grateful for your help with something on my booking.", "why": "'도와줘'를 'I'd be grateful for your help'로 → 정중한 부탁."}, {"sc": "고객센터", "basic": "Tell me the price.", "polished": "Could you let me know the rate for this?", "ko": "이 가격을 알려주실 수 있나요?", "ex": "Could you let me know the rate for an ocean-view cabin?", "why": "명령을 'Could you let me know~'로 → 부드러운 문의."}, {"sc": "고객센터", "basic": "Cancel my booking.", "polished": "I'd like to cancel my reservation, if possible.", "ko": "가능하다면 예약을 취소하고 싶습니다.", "ex": "I'd like to cancel my reservation, if possible — what are my options?", "why": "명령을 'I'd like to~, if possible'로 → 정중하게."}, {"sc": "고객센터", "basic": "Is this available?", "polished": "I wanted to check whether this is still available.", "ko": "이게 아직 가능한지 확인하고 싶었어요.", "ex": "I wanted to check whether the May sailing is still available.", "why": "단답 질문을 'I wanted to check whether~'로 → 격식 있게."}, {"sc": "고객센터", "basic": "I want a window room.", "polished": "If possible, I'd prefer a cabin with a sea view.", "ko": "가능하다면 바다 전망 객실을 선호해요.", "ex": "If possible, I'd prefer a cabin with a sea view.", "why": "'원해'를 'If possible, I'd prefer~'로 → 부드러운 선호 표현."}, {"sc": "고객센터", "basic": "Send me the details.", "polished": "Could you kindly send over the details?", "ko": "자세한 내용을 보내주실 수 있을까요?", "ex": "Could you kindly send over the details when convenient?", "why": "명령을 'Could you kindly~'로 → 정중하고 따뜻하게."}, {"sc": "고객센터", "basic": "I'm not happy with this.", "polished": "I have to admit I was a little disappointed.", "ko": "솔직히 조금 실망스러웠어요.", "ex": "I have to admit I was a little disappointed with how this was handled.", "why": "불만을 'a little disappointed'로 → 감정적이지 않고 품위 있게."}, {"sc": "고객센터", "basic": "Hurry please.", "polished": "I'd really appreciate it if this could be sorted soon.", "ko": "빨리 해결되면 정말 감사하겠습니다.", "ex": "I'd really appreciate it if this could be sorted soon.", "why": "재촉을 'I'd really appreciate it if~'로 → 정중한 압박."}, {"sc": "고객센터", "basic": "Confirm my booking.", "polished": "Could you kindly confirm my reservation?", "ko": "제 예약을 확인해 주실 수 있나요?", "ex": "Could you kindly confirm my reservation for the 18th?", "why": "명령을 'Could you kindly confirm~'로 → 격식 있는 확인 요청."}, {"sc": "고객센터", "basic": "I have a complaint.", "polished": "I wanted to raise something gently, if I may.", "ko": "조심스럽게 한 가지 말씀드리고 싶어요.", "ex": "I wanted to raise something gently, if I may, about my last booking.", "why": "'불평'을 'raise something gently, if I may'로 → 매우 정중하게."}, {"sc": "고객센터", "basic": "Explain this charge.", "polished": "Could you help me understand this charge?", "ko": "이 청구 내역을 이해하도록 도와주실 수 있나요?", "ex": "Could you help me understand this charge on my statement?", "why": "'설명해'를 'help me understand'로 → 협조적이고 부드럽게."}, {"sc": "네트워킹", "basic": "I do cruise business.", "polished": "I help people build a life around travel.", "ko": "저는 사람들이 여행 중심의 삶을 만들도록 돕습니다.", "ex": "I help people build a life around travel — mostly through cruising.", "why": "직업 나열 대신 '상대가 얻는 가치'로 설명 → 인상 깊은 자기소개."}, {"sc": "네트워킹", "basic": "Let's work together.", "polished": "I'd love to explore how we might work together.", "ko": "함께할 방법을 찾아보고 싶어요.", "ex": "I'd love to explore how we might work together sometime.", "why": "직접 제안을 'explore how we might~'로 → 부드러운 가능성 제시."}, {"sc": "네트워킹", "basic": "Nice to meet you.", "polished": "It's a pleasure to finally connect.", "ko": "드디어 인사 나누게 되어 반가워요.", "ex": "It's a pleasure to finally connect after seeing your posts!", "why": "흔한 인사를 'finally connect'로 → 따뜻함과 격식을 동시에."}, {"sc": "네트워킹", "basic": "Tell me about your work.", "polished": "I'd love to hear more about what you do.", "ko": "어떤 일을 하시는지 더 듣고 싶어요.", "ex": "I'd love to hear more about what you do — it sounds fascinating.", "why": "명령형 'Tell me'를 'I'd love to hear~'로 → 관심을 정중히 표현."}, {"sc": "네트워킹", "basic": "I like your work.", "polished": "I've long admired what you do.", "ko": "오래전부터 당신의 일을 존경해 왔어요.", "ex": "I've long admired what you do — your last project especially.", "why": "'좋아해요'를 'long admired'로 → 진중하고 품격 있는 칭찬."}, {"sc": "네트워킹", "basic": "Can you help me?", "polished": "I'd welcome any guidance you're willing to share.", "ko": "조언을 나눠주신다면 정말 감사하겠어요.", "ex": "I'd welcome any guidance you're willing to share on this.", "why": "'도와줘'를 'I'd welcome any guidance'로 → 겸손하고 정중하게."}, {"sc": "네트워킹", "basic": "Let's keep in touch.", "polished": "Let's definitely stay in touch.", "ko": "꼭 계속 연락해요.", "ex": "This was great — let's definitely stay in touch.", "why": "'keep'을 'definitely stay'로 → 의지를 담아 따뜻하게."}, {"sc": "네트워킹", "basic": "I saw your post.", "polished": "I came across your post and it really resonated with me.", "ko": "우연히 글을 봤는데 정말 공감됐어요.", "ex": "I came across your post and it really resonated with me.", "why": "사실 전달을 'came across ~ resonated with me'로 → 진정성."}, {"sc": "네트워킹", "basic": "I want to learn from you.", "polished": "I'd love the chance to learn from you.", "ko": "배울 기회가 있다면 정말 좋겠어요.", "ex": "I'd love the chance to learn from you sometime.", "why": "'배우고 싶어'를 'I'd love the chance to~'로 → 겸손하고 정중하게."}, {"sc": "네트워킹", "basic": "We should meet.", "polished": "It'd be lovely to meet in person sometime.", "ko": "언젠가 직접 뵈면 정말 좋겠어요.", "ex": "It'd be lovely to meet in person sometime if you're ever in town.", "why": "'만나자'를 'It'd be lovely to~'로 → 부드럽고 격식 있게."}, {"sc": "네트워킹", "basic": "Thanks for connecting.", "polished": "Thank you for connecting — I'm looking forward to it.", "ko": "연결해 주셔서 감사해요, 기대돼요.", "ex": "Thank you for connecting — I'm really looking forward to it.", "why": "단순 감사에 기대감(looking forward)을 더해 → 따뜻하게."}, {"sc": "네트워킹", "basic": "I'll contact you later.", "polished": "I'll follow up with you soon.", "ko": "곧 다시 연락드릴게요.", "ex": "I'll follow up with you soon with the details.", "why": "'contact later'를 'follow up soon'으로 → 더 프로페셔널하게."}, {"sc": "네트워킹", "basic": "You are very successful.", "polished": "Your work really speaks for itself.", "ko": "당신의 결과물이 모든 걸 말해줘요.", "ex": "Your work really speaks for itself — congratulations.", "why": "직접 칭찬을 'speaks for itself'로 → 은근하고 세련된 인정."}, {"sc": "네트워킹", "basic": "Let's do a project.", "polished": "I think there could be something interesting here for us.", "ko": "우리 사이에 흥미로운 게 있을 것 같아요.", "ex": "I think there could be something interesting here for us to explore.", "why": "'프로젝트하자'를 'something interesting for us'로 → 가능성 제시."}, {"sc": "네트워킹", "basic": "I appreciate your time.", "polished": "Thank you for taking the time — I know you're busy.", "ko": "바쁘실 텐데 시간 내주셔서 감사해요.", "ex": "Thank you for taking the time — I know you're busy.", "why": "감사에 상대의 상황(I know you're busy)을 더해 → 배려."}, {"sc": "네트워킹", "basic": "Introduce me to them.", "polished": "Would you be open to introducing us sometime?", "ko": "언젠가 소개해 주실 수 있을까요?", "ex": "Would you be open to introducing us sometime? No pressure at all.", "why": "명령을 'Would you be open to~'로 → 부담 없는 부탁."}, {"sc": "네트워킹", "basic": "Great to meet you.", "polished": "It's been a real pleasure.", "ko": "정말 즐거운 만남이었어요.", "ex": "It's been a real pleasure — let's do this again.", "why": "'반가웠어'를 'a real pleasure'로 → 격식 있는 마무리."}, {"sc": "네트워킹", "basic": "I agree with you.", "polished": "You've put it better than I could have.", "ko": "제가 하려던 말을 더 멋지게 해주셨네요.", "ex": "Couldn't agree more — you've put it better than I could have.", "why": "'동의해요'를 칭찬을 곁들여 → 센스 있고 우아하게."}, {"sc": "연결어", "basic": "Also, I have a question.", "polished": "On top of that, I have a quick question.", "ko": "그리고 한 가지 여쭤볼 게 있어요.", "ex": "On top of that, I have a quick question about the itinerary.", "why": "'Also' → 'On top of that': 더 자연스럽고 세련된 연결."}, {"sc": "연결어", "basic": "But it was hard.", "polished": "That said, it wasn't always easy.", "ko": "그렇긴 해도, 늘 쉽진 않았어요.", "ex": "I love this life. That said, it wasn't always easy.", "why": "'But' → 'That said': 부드럽게 흐름을 전환."}, {"sc": "연결어", "basic": "I think you should try it.", "polished": "You might find it worth a try.", "ko": "한번 해볼 만하다고 느끼실 거예요.", "ex": "If you're curious, you might find it worth a try.", "why": "직접 충고(you should) 대신 'you might find it worth~' 완곡한 제안."}, {"sc": "연결어", "basic": "So, I decided to leave.", "polished": "With that in mind, I decided to leave.", "ko": "그런 생각으로, 떠나기로 했어요.", "ex": "With that in mind, I decided to leave the safe path behind.", "why": "'So'를 'With that in mind'로 → 사고의 흐름을 우아하게 연결."}, {"sc": "연결어", "basic": "Anyway, let's move on.", "polished": "In any case, let's move on.", "ko": "어쨌든, 넘어가 볼게요.", "ex": "In any case, let's move on to the fun part.", "why": "구어적 'Anyway'를 'In any case'로 → 격식 있는 전환."}, {"sc": "연결어", "basic": "For example, cruising.", "polished": "Take cruising, for instance.", "ko": "예를 들면, 크루즈가 있죠.", "ex": "Take cruising, for instance — it changed everything for me.", "why": "'For example'을 'Take ~, for instance'로 → 자연스럽고 세련되게."}, {"sc": "연결어", "basic": "In my opinion, it's worth it.", "polished": "The way I see it, it's worth it.", "ko": "제가 보기엔, 그럴 가치가 있어요.", "ex": "The way I see it, the freedom alone is worth it.", "why": "'In my opinion'을 'The way I see it'로 → 부드럽고 회화적으로."}, {"sc": "연결어", "basic": "Actually, it was easy.", "polished": "As it turns out, it was easier than I feared.", "ko": "알고 보니, 생각보다 쉬웠어요.", "ex": "As it turns out, it was easier than I feared.", "why": "'Actually'를 'As it turns out'으로 → 이야기처럼 매끄럽게."}, {"sc": "연결어", "basic": "I want to say thank you.", "polished": "I just wanted to take a moment to say thank you.", "ko": "잠시 감사 인사를 전하고 싶었어요.", "ex": "I just wanted to take a moment to say thank you to all of you.", "why": "'감사하고 싶어'를 'take a moment to~'로 → 진심 어린 톤."}, {"sc": "연결어", "basic": "To be honest, I was scared.", "polished": "If I'm being candid, I was scared.", "ko": "솔직히 말하면, 무서웠어요.", "ex": "If I'm being candid, I was scared out of my mind.", "why": "'To be honest'를 'If I'm being candid'로 → 한층 세련된 고백."}, {"sc": "연결어", "basic": "And then everything changed.", "polished": "Before long, everything changed.", "ko": "머지않아, 모든 게 달라졌어요.", "ex": "Before long, everything changed in the best way.", "why": "'And then'을 'Before long'으로 → 시간의 흐름을 우아하게."}, {"sc": "연결어", "basic": "Because of this, I grew.", "polished": "For that reason, I grew so much.", "ko": "그 덕분에, 저는 정말 성장했어요.", "ex": "For that reason, I grew in ways I never expected.", "why": "'Because of this'를 'For that reason'으로 → 격식 있는 인과 표현."}, {"sc": "연결어", "basic": "At the end, I was happy.", "polished": "In the end, what stayed with me was the freedom.", "ko": "결국 제게 남은 건 자유였어요.", "ex": "In the end, what stayed with me was the freedom.", "why": "'At the end'를 'In the end, what stayed with me was~'로 → 여운."}, {"sc": "연결어", "basic": "Of course, I said yes.", "polished": "Needless to say, I said yes.", "ko": "두말할 것 없이, 저는 응했어요.", "ex": "Needless to say, I said yes without a second thought.", "why": "'Of course'를 'Needless to say'로 → 세련된 강조."}, {"sc": "연결어", "basic": "More importantly, be brave.", "polished": "Above all, be brave.", "ko": "무엇보다도, 용감해지세요.", "ex": "Above all, be brave enough to begin.", "why": "'More importantly'를 'Above all'로 → 간결하고 강한 마무리."}, {"sc": "연결어", "basic": "By the way, I have news.", "polished": "On a related note, I have some news.", "ko": "그건 그렇고, 소식이 하나 있어요.", "ex": "On a related note, I have some news I've been dying to share.", "why": "'By the way'를 'On a related note'로 → 자연스럽게 화제 전환."}];
+
+const QUIZ = [{"sc": "고객센터", "situation": "예약을 변경하고 싶을 때", "options": ["I want to change my booking now.", "Change my booking.", "I'd like to make a small adjustment to my reservation."], "correct": 2, "why": "'I'd like' + 'small adjustment'가 정중하고 세련돼요. 나머지는 명령에 가까워요."}, {"sc": "DM", "situation": "관심 보인 분에게 부담 없이 안내", "options": ["If it feels right for you, I'd love to walk you through it.", "You must join this, it's the best.", "Join now, don't miss it."], "correct": 0, "why": "조건을 부드럽게 두고 'I'd love to'로 다가가면 압박감이 없어요."}, {"sc": "캡션", "situation": "바다 사진에 붙일 감성 문구", "options": ["The sea is very very beautiful today.", "There's something quietly magical about the open sea.", "Look at the sea, so nice."], "correct": 1, "why": "'something quietly magical'이 여운을 남겨요. 'very very'는 평범한 강조예요."}, {"sc": "네트워킹", "situation": "협업을 제안할 때", "options": ["Work with me.", "I'd love to explore how we might work together.", "Do you want to work together or not?"], "correct": 1, "why": "'explore how we might~'은 부드러운 가능성 제시라 세련돼요."}, {"sc": "고객센터", "situation": "빠른 답변을 정중히 부탁", "options": ["Reply fast please.", "Answer me now.", "I'd appreciate any update when you get the chance."], "correct": 2, "why": "재촉 대신 'when you get the chance'로 정중하게 부탁하는 표현이에요."}, {"sc": "DM", "situation": "부담 없이 연락을 유도", "options": ["Message me.", "Feel free to reach out anytime.", "Send me a message right now."], "correct": 1, "why": "'Feel free to reach out anytime'은 여유롭고 따뜻한 인상을 줘요."}, {"sc": "네트워킹", "situation": "인상 깊게 자기소개", "options": ["I do cruise business.", "I sell cruises to people.", "I help people build a life around travel."], "correct": 2, "why": "직업 나열 대신 '상대가 얻는 가치'로 말하면 기억에 남아요."}, {"sc": "고객센터", "situation": "환불을 정중히 요청", "options": ["Give me a refund.", "Would it be possible to arrange a refund?", "I need refund now."], "correct": 1, "why": "'Would it be possible to~'는 정중한 요청 형태예요."}, {"sc": "캡션", "situation": "퇴사 스토리를 한 줄로", "options": ["I quit my job and travel now.", "Ten years since I traded my desk for the open sea.", "No more office for me, bye."], "correct": 1, "why": "대비 이미지(desk ↔ open sea)로 한 줄 스토리를 만들면 감성적이에요."}, {"sc": "네트워킹", "situation": "첫 인사를 따뜻하게", "options": ["Nice to meet you.", "Hi there.", "It's a pleasure to finally connect."], "correct": 2, "why": "'finally connect'는 따뜻함과 격식을 동시에 담아요."}, {"sc": "고객센터", "situation": "객실 업그레이드 문의", "options": ["Can I get a better room?", "I want a better room.", "I was wondering if an upgrade might be available."], "correct": 2, "why": "'I was wondering if~'는 완곡하고 세련된 문의예요."}, {"sc": "연결어", "situation": "부드럽게 흐름 전환", "options": ["But it was hard.", "That said, it wasn't always easy.", "Anyway it was hard."], "correct": 1, "why": "'That said'는 앞말을 부드럽게 받아 전환하는 세련된 연결어예요."}, {"sc": "DM", "situation": "진심을 담아 감사", "options": ["Thanks for your message.", "Thank you so much for taking the time to reach out.", "Ok thanks bye."], "correct": 1, "why": "상대의 노력(taking the time)을 짚으면 진심이 더 전해져요."}, {"sc": "네트워킹", "situation": "상대 일에 관심 표현", "options": ["Tell me about your work.", "I'd love to hear more about what you do.", "What's your job?"], "correct": 1, "why": "'I'd love to hear more about~'는 관심을 정중하게 표현해요."}, {"sc": "연결어", "situation": "부드럽게 권유", "options": ["You should try it.", "Try it now.", "You might find it worth a try."], "correct": 2, "why": "'you might find it worth~'는 강요 없이 권하는 완곡한 표현이에요."}, {"sc": "DM", "situation": "늦은 답장에 대한 인사", "options": ["Sorry sorry for late reply.", "Thank you for your patience — getting back to you now.", "I was busy so late."], "correct": 1, "why": "사과보다 'Thank you for your patience'가 더 품위 있어요."}, {"sc": "캡션", "situation": "자유로움을 표현", "options": ["I feel so free now.", "Out here, freedom isn't a word — it's a feeling.", "Freedom is good."], "correct": 1, "why": "'단어가 아니라 감각'이라는 대비가 시적이고 세련돼요."}, {"sc": "고객센터", "situation": "예약에 문제가 있을 때", "options": ["This is wrong, fix it.", "There seems to be a small issue with my booking.", "Your system is broken."], "correct": 1, "why": "'There seems to be a small issue'는 비난 없이 부드럽게 짚어요."}, {"sc": "네트워킹", "situation": "조언을 구할 때", "options": ["Help me please.", "Tell me what to do.", "I'd welcome any guidance you're willing to share."], "correct": 2, "why": "'I'd welcome any guidance'는 겸손하고 정중한 요청이에요."}, {"sc": "연결어", "situation": "솔직한 고백을 꺼낼 때", "options": ["To be honest, I was scared.", "If I'm being candid, I was scared.", "Honestly scared lol."], "correct": 1, "why": "'If I'm being candid'가 'To be honest'보다 한층 세련돼요."}, {"sc": "DM", "situation": "의견을 정중히 물을 때", "options": ["Tell me what you think.", "I'd love to hear your honest thoughts.", "What do you think, quickly."], "correct": 1, "why": "명령 대신 'I'd love to hear~'로 부드럽게 의견을 청해요."}, {"sc": "캡션", "situation": "감사 인사를 남길 때", "options": ["Thanks for following me.", "Thank you for being part of this little journey.", "TY for the follow."], "correct": 1, "why": "'part of this journey'는 관계의 따뜻함을 담아요."}, {"sc": "고객센터", "situation": "청구 내역 문의", "options": ["Explain this charge.", "Could you help me understand this charge?", "Why this charge?"], "correct": 1, "why": "'help me understand'는 협조적이고 부드러운 문의예요."}, {"sc": "네트워킹", "situation": "칭찬을 은근하게", "options": ["You are so successful.", "Your work really speaks for itself.", "You are rich and famous."], "correct": 1, "why": "'speaks for itself'는 은근하면서 품격 있는 인정이에요."}, {"sc": "연결어", "situation": "화제를 바꿀 때", "options": ["By the way, I have news.", "Anyway, news.", "Change topic — news."], "correct": 0, "why": "여기선 'By the way'도 자연스럽지만, 글에선 'On a related note'가 더 세련돼요."}, {"sc": "캡션", "situation": "두려움을 이긴 서사", "options": ["I was scared but did it.", "I was terrified. I did it anyway.", "Scary but ok now."], "correct": 1, "why": "짧은 두 문장과 'anyway'가 용기 서사를 강렬하게 만들어요."}, {"sc": "DM", "situation": "무엇이든 물어보라 할 때", "options": ["Ask me anything.", "Please don't hesitate to ask me anything.", "Ask ask ask."], "correct": 1, "why": "'don't hesitate to~'는 정중하고 열린 태도를 보여줘요."}, {"sc": "고객센터", "situation": "취소를 요청할 때", "options": ["Cancel it.", "Cancel my booking now.", "I'd like to cancel my reservation, if possible."], "correct": 2, "why": "'I'd like to~, if possible'은 정중한 취소 요청이에요."}, {"sc": "네트워킹", "situation": "계속 연락하자 할 때", "options": ["Keep in touch ok?", "Let's definitely stay in touch.", "Don't forget me."], "correct": 1, "why": "'Let's definitely stay in touch'는 의지를 담아 따뜻해요."}, {"sc": "연결어", "situation": "결론을 우아하게", "options": ["At the end I was happy.", "In the end, what stayed with me was the freedom.", "Finally happy end."], "correct": 1, "why": "'In the end, what stayed with me was~'는 여운 있는 마무리예요."}];
+
+/* ── 상태 ───────────────────────────────────── */
+function todayStr(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function dayDiff(a,b){return Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/86400000);}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+let state = {points:0,streak:0,lastDate:null,mastered:[]};
+try{const s=localStorage.getItem("ee_state"); if(s) state=Object.assign(state,JSON.parse(s));}catch(e){}
+function save(){try{localStorage.setItem("ee_state",JSON.stringify(state));}catch(e){}}
+
+function bump(pts){
+  const t=todayStr();
+  if(state.lastDate==null) state.streak=1;
+  else{const d=dayDiff(state.lastDate,t); if(d===1) state.streak+=1; else if(d>1) state.streak=1;}
+  state.points+=pts; state.lastDate=t; save(); renderHeader();
+}
+function master(p){ if(!state.mastered.includes(p)){ state.mastered.unshift(p); save(); } }
+
+function renderHeader(){
+  document.getElementById("streak").textContent="🔥"+state.streak;
+  document.getElementById("points").textContent=state.points;
+  const level=Math.floor(state.points/300)+1, into=state.points%300;
+  document.getElementById("level").textContent=level;
+  document.getElementById("masterCount").textContent="외운 표현 "+state.mastered.length+"개";
+  document.getElementById("intoTxt").textContent=into+"/300";
+  document.getElementById("fill").style.width=(into/300*100)+"%";
+}
+
+/* ── 뷰 전환 ───────────────────────────────────── */
+function setView(v){
+  ["learn","quiz","saved"].forEach(function(k){
+    document.getElementById("view-"+k).classList.toggle("hidden",k!==v);
+    document.getElementById("tab-"+k).classList.toggle("on",k===v);
+  });
+  if(v==="quiz" && !quizCur) loadQuiz();
+  if(v==="saved") renderSaved();
+}
+
+/* ── 플래시카드 ───────────────────────────────────── */
+let deck=shuffle(BANK.map(function(_,i){return i;})), di=0, flipped=false;
+function renderCard(){
+  const c=BANK[deck[di]];
+  document.getElementById("flip").classList.remove("on"); flipped=false;
+  document.getElementById("cBadgeF").textContent=SC[c.sc].emoji+" "+SC[c.sc].ko;
+  document.getElementById("cBasic").textContent='"'+c.basic+'"';
+  document.getElementById("cPol").textContent='"'+c.polished+'"';
+  document.getElementById("cKo").textContent=c.ko;
+  document.getElementById("cEx").textContent='예) "'+c.ex+'"';
+  document.getElementById("cWhy").textContent="💡 "+c.why;
+  document.getElementById("learnHint").textContent="카드를 탭하면 세련된 표현이 보여요 · "+(di+1)+"/"+deck.length;
+}
+function flip(){flipped=!flipped; document.getElementById("flip").classList.toggle("on",flipped);}
+function nextCard(learned){
+  if(learned){ master(BANK[deck[di]].polished); bump(10); }
+  di++; if(di>=deck.length){ deck=shuffle(BANK.map(function(_,i){return i;})); di=0; }
+  renderCard();
+}
+
+/* ── 퀴즈 ───────────────────────────────────── */
+let quizDeck=shuffle(QUIZ.map(function(_,i){return i;})), qi=0, quizCur=null, answered=false;
+function loadQuiz(){
+  qi++; if(qi>=quizDeck.length){ quizDeck=shuffle(QUIZ.map(function(_,i){return i;})); qi=0; }
+  quizCur=QUIZ[quizDeck[qi]]; answered=false;
+  document.getElementById("qBadge").textContent=SC[quizCur.sc].emoji+" "+SC[quizCur.sc].ko;
+  document.getElementById("qSit").textContent="상황 · "+quizCur.situation;
+  const ex=document.getElementById("qExplain"); ex.classList.add("hidden");
+  const box=document.getElementById("qOpts"); box.innerHTML="";
+  quizCur.options.forEach(function(op,i){
+    const b=document.createElement("button");
+    b.className="opt"; b.textContent=op;
+    b.onclick=function(){pick(i,b);};
+    box.appendChild(b);
+  });
+  document.getElementById("quizCard").classList.remove("rise"); void document.getElementById("quizCard").offsetWidth;
+  document.getElementById("quizCard").classList.add("rise");
+}
+function pick(i,btn){
+  if(answered) return; answered=true;
+  const opts=document.getElementById("qOpts").children;
+  for(let k=0;k<opts.length;k++){ opts[k].disabled=true;
+    if(k===quizCur.correct) opts[k].classList.add("correct");
+    if(k===i && i!==quizCur.correct) opts[k].classList.add("wrong");
+  }
+  if(i===quizCur.correct){ opts[i].textContent="✓ "+opts[i].textContent; }
+  else { opts[i].textContent="✗ "+opts[i].textContent; opts[quizCur.correct].textContent="✓ "+opts[quizCur.correct].textContent; }
+  const ok=i===quizCur.correct;
+  bump(ok?20:5);
+  const ex=document.getElementById("qExplain");
+  ex.innerHTML='<b class="'+(ok?"ok":"no")+'">'+(ok?"정답이에요! +20":"아쉬워요 +5")+'</b><br>💡 '+quizCur.why;
+  ex.classList.remove("hidden");
+}
+
+/* ── 외운 표현 ───────────────────────────────────── */
+function renderSaved(){
+  const box=document.getElementById("savedList");
+  if(state.mastered.length===0){ box.innerHTML='<div class="empty">아직 외운 표현이 없어요.<br>배우기에서 "외웠어요"를 누르면<br>여기에 모여요 ✦</div>'; return; }
+  box.innerHTML=state.mastered.map(function(p){return '<div class="saved-item">✦ "'+p.replace(/"/g,'&quot;')+'"</div>';}).join("");
+}
+
+/* ── 시작 ───────────────────────────────────── */
+renderHeader(); renderCard();
+</script>
+</body>
+</html>
